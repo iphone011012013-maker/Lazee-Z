@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17251f">
+<title>Lazee Z لذيذ | المنيو والطلبات</title>
+<style>
+:root{--green:#f5b83d;--dark:#0f1220;--cream:#0f1220;--muted:#aab0c4;--line:#2a3046;--orange:#f5b83d}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:#eef0fa;font-family:Tahoma,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+header{background:#0b0e19;color:#fff;padding:22px 16px 26px}
+.wrap{width:100%;max-width:512px;margin:auto;padding:0 16px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:52px;height:52px;border-radius:16px;background:#fff;color:var(--green);display:grid;place-items:center;font-size:27px;font-weight:bold}
+.brand h1{font-size:21px;margin:0 0 5px}.brand p{margin:0;color:#aab0c4;font-size:12px}
+.open{font-size:12px;color:#f5b83d;border:1px solid #665326;border-radius:30px;padding:8px 11px}
+.hero{margin-top:22px;display:flex;justify-content:space-between;align-items:end;gap:15px}.hero h2{font-size:25px;margin:0 0 8px}.hero p{color:#aab0c4;margin:0;font-size:13px;line-height:1.8}
+main{padding:22px 0 50px}.notice{background:#211d14;border:1px solid #5b4822;border-radius:13px;padding:12px 14px;font-size:12px;line-height:1.8;margin-bottom:18px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;align-items:start}
+.search{width:100%;padding:13px 15px;border:1px solid var(--line);border-radius:12px;background:#181c30;color:#eef0fa;outline:none;margin-bottom:14px}
+.categories{display:flex;gap:8px;overflow:auto;padding-bottom:12px}.cat{border:1px solid var(--line);background:#181c30;color:#eef0fa;border-radius:30px;padding:9px 15px;white-space:nowrap;font-size:13px}.cat.active{background:var(--green);color:#171717;border-color:var(--green)}
+.section-title{font-size:19px;margin:10px 0 14px}
+.menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.item{background:#181c30;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.foodpic{height:130px;display:grid;place-items:center;font-size:55px;background:linear-gradient(135deg,#282d43,#1c2631)}
+.itembody{padding:12px}.item h3{font-size:15px;margin:0 0 6px}.desc{font-size:11px;color:var(--muted);line-height:1.6;min-height:35px}.itemfoot{display:flex;align-items:center;justify-content:space-between;margin-top:10px}.price{font-weight:bold;color:var(--green)}.add{border:0;background:var(--green);color:#171717;border-radius:9px;padding:8px 13px;font-size:12px}
+.cart{background:#181c30;border:1px solid var(--line);border-radius:16px;padding:16px;position:sticky;top:12px}
+.cart h2{font-size:18px;margin:0 0 13px}.empty{text-align:center;color:var(--muted);font-size:13px;padding:22px 0}
+.cartrow{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding:10px 0;font-size:12px}.qty{display:flex;align-items:center;gap:8px;white-space:nowrap}.qty button{border:1px solid var(--line);background:#222840;color:#eef0fa;border-radius:7px;width:25px;height:25px}
+.total{display:flex;justify-content:space-between;font-weight:bold;margin:14px 0 5px}.muted{font-size:11px;color:var(--muted)}
+.primary{width:100%;border:0;background:var(--green);color:#171717;padding:13px;border-radius:11px;margin-top:13px;font-weight:bold}
+.overlay{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:5}.overlay.show{display:flex}
+.modal{background:#181c30;color:#eef0fa;width:min(512px,100%);max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:20px}
+.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.modalhead h2{font-size:19px;margin:0}.close{border:0;background:#2a3046;color:#eef0fa;border-radius:50%;width:34px;height:34px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:bold}.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:10px;padding:11px;background:#0f1220;color:#eef0fa;min-width:0}.field textarea{min-height:70px;resize:vertical}
+.choice{display:flex;gap:8px;flex-wrap:wrap}.choice label{border:1px solid var(--line);border-radius:10px;background:#20253a;padding:10px 12px;font-size:12px;display:flex;gap:6px;align-items:center}
+.payment-info{background:#202b27;border:1px solid #365a47;border-radius:12px;padding:12px;font-size:12px;line-height:1.9}
+.pay-panel{display:none;background:#20253a;border:1px solid var(--line);border-radius:12px;padding:12px;gap:10px;margin-top:10px}
+.pay-panel.show{display:grid}
+.pay-actions{display:flex;gap:8px;flex-wrap:wrap}
+.pay-actions a{flex:1;text-align:center;text-decoration:none;background:#f5b83d;color:#171717;padding:10px;border-radius:9px;font-size:12px;font-weight:bold}
+.upload-preview{display:none;max-width:180px;max-height:180px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin-top:8px}
+.summary{background:#222840;border-radius:12px;padding:12px;font-size:12px;line-height:1.9}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:22px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.cart{position:static}.hero h2{font-size:21px}.menu{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){.menu{grid-template-columns:1fr 1fr;gap:9px}.foodpic{height:100px}.itembody{padding:9px}.desc{font-size:10px}.item h3{font-size:13px}.brand h1{font-size:18px}.open{font-size:10px}.hero{align-items:start;flex-direction:column}form{grid-template-columns:1fr}.field.full{grid-column:auto}}
+
+/* Mobile-first refinements */
+@media (max-width: 600px) {
+  body { font-size: 14px; padding-bottom: 112px; }
+  header { padding: 15px 0 18px; }
+  .wrap { padding-left: 12px; padding-right: 12px; }
+  .top { align-items: center; }
+  .logo { width: 44px; height: 44px; border-radius: 13px; }
+  .brand { gap: 9px; }
+  .brand h1 { font-size: 17px; }
+  .brand p { font-size: 10px; }
+  .open { padding: 7px 9px; font-size: 10px; }
+  .hero { margin-top: 14px; }
+  .hero h2 { font-size: 20px; }
+  .hero p { font-size: 11px; line-height: 1.7; }
+  main { padding-top: 13px; }
+  .notice { font-size: 11px; padding: 10px 11px; margin-bottom: 13px; }
+  .search { padding: 12px 13px; margin-bottom: 10px; font-size: 13px; }
+  .categories { position: sticky; top: 0; z-index: 3; background: var(--cream); padding: 7px 0 11px; margin: 0 -2px; }
+  .cat { padding: 8px 13px; font-size: 12px; }
+  .section-title { font-size: 17px; margin: 7px 0 11px; }
+  .menu { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .item { border-radius: 13px; }
+  .foodpic { height: 92px; font-size: 39px; }
+  .itembody { padding: 9px; }
+  .item h3 { font-size: 12px; line-height: 1.5; min-height: 18px; }
+  .desc { font-size: 10px; line-height: 1.5; min-height: 30px; }
+  .itemfoot { margin-top: 8px; gap: 5px; }
+  .price { font-size: 12px; white-space: nowrap; }
+  .add { padding: 7px 9px; font-size: 11px; border-radius: 8px; }
+  .cart {
+    position: fixed; z-index: 4; left: 0; right: 0; bottom: 0;
+    top: auto; width: 100%; max-height: 42vh; overflow-y: auto;
+    border-radius: 17px 17px 0 0; padding: 10px 13px calc(10px + env(safe-area-inset-bottom));
+    box-shadow: 0 -5px 24px #17251f20; border-bottom: 0;
+  }
+  .cart h2 { font-size: 14px; margin: 0 0 6px; }
+  #cartItems { max-height: 105px; overflow-y: auto; }
+  #cartItems.empty { padding: 5px 0; font-size: 11px; }
+  .cartrow { padding: 6px 0; font-size: 11px; }
+  .total { margin: 7px 0 2px; font-size: 13px; }
+  .cart .muted { font-size: 9px; }
+  .cart .primary { margin-top: 8px; padding: 11px; font-size: 13px; }
+  footer { padding: 15px 0; }
+  .overlay { align-items: flex-end; }
+  .modal { width: 100%; max-height: 94dvh; padding: 16px 14px calc(16px + env(safe-area-inset-bottom)); border-radius: 18px 18px 0 0; }
+  .modalhead h2 { font-size: 17px; }
+  form { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .field label { font-size: 11px; }
+  .field input, .field select, .field textarea { padding: 10px; font-size: 13px; }
+  .field.full { grid-column: 1 / -1; }
+  .choice { gap: 6px; }
+  .choice label { padding: 9px 10px; font-size: 11px; }
+  .primary { padding: 12px; }
+}
+@media (max-width: 360px) {
+  .menu { gap: 7px; }
+  .foodpic { height: 82px; }
+  .itembody { padding: 8px; }
+  .item h3 { font-size: 11px; }
+  .price { font-size: 11px; }
+  .add { padding: 6px 7px; font-size: 10px; }
+  form { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+}
+
+
+/* Single-row product rail: compact cards, checkout stays hidden until requested */
+.menu {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 1px 12px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.menu .item {
+  flex: 0 0 158px;
+  width: 158px;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+.menu .foodpic { height: 78px; font-size: 34px; }
+.menu .itembody { padding: 8px; }
+.menu .item h3 { font-size: 11px; margin-bottom: 4px; }
+.menu .desc { font-size: 9px; min-height: 29px; line-height: 1.45; }
+.menu .itemfoot { margin-top: 6px; }
+.menu .price { font-size: 11px; }
+.menu .add { padding: 6px 8px; font-size: 10px; }
+.menu::-webkit-scrollbar { height: 4px; }
+.menu::-webkit-scrollbar-thumb { background: #c9d1ca; border-radius: 10px; }
+@media (max-width: 600px) {
+  .menu .item { flex-basis: 142px; width: 142px; }
+  .menu .foodpic { height: 72px; }
+}
+@media (max-width: 360px) {
+  .menu .item { flex-basis: 132px; width: 132px; }
+}
+/* Checkout overlay is not displayed while browsing; it opens only from checkout button. */
+#checkout { display: none; }
+#checkout.show { display: flex; }
+
+
+/* Product display area width: 400px (the rest of the page remains unchanged) */
+.layout > section {
+  width: 100%;
+  max-width: 400px;
+  margin-inline: auto;
+}
+.layout > section .menu {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Requested layout: products stacked vertically, one product per row */
+.menu {
+ display:flex !important; flex-direction:column !important; flex-wrap:nowrap !important;
+ gap:8px; overflow:visible !important; padding:0 0 14px;
+}
+.menu .item {
+ width:100% !important; min-width:0 !important; flex:0 0 auto !important;
+ display:flex; flex-direction:row; align-items:stretch; min-height:92px;
+}
+.menu .foodpic { width:88px; min-width:88px; height:auto !important; font-size:30px; }
+.menu .itembody { flex:1; min-width:0; padding:9px 10px; display:flex; flex-direction:column; justify-content:center; }
+.menu .item h3 { font-size:13px; margin:0 0 3px; min-height:0; }
+.menu .desc { font-size:10px; min-height:0; line-height:1.5; }
+.menu .itemfoot { margin-top:6px; }
+.menu .price { font-size:12px; }
+.menu .add { padding:7px 11px; font-size:11px; }
+.cart { position:fixed; z-index:4; left:10px; right:10px; bottom:calc(8px + env(safe-area-inset-bottom)); top:auto;
+ width:auto; max-height:none; overflow:visible; border-radius:14px; padding:9px 12px;
+ box-shadow:0 3px 22px #17251f25; border:1px solid var(--line); }
+.cart h2 { font-size:13px; margin:0 0 3px; }
+#cartItems { display:none !important; }
+.cart .total { margin:2px 0; font-size:12px; }
+.cart .muted { display:none; }
+.cart .primary { margin-top:6px; padding:10px; font-size:12px; }
+body { padding-bottom:135px; }
+.flow-modal { width:min(512px,100%); }
+.review-row { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:12px 0; border-bottom:1px solid var(--line); font-size:13px; }
+.review-controls { display:flex; align-items:center; gap:8px; white-space:nowrap; }
+.review-controls button { width:27px; height:27px; border:1px solid var(--line); background:#222840;color:#eef0fa; border-radius:7px; }
+.secondary-btn { width:100%; border:1px solid var(--line); background:#fff; color:var(--dark); padding:11px; border-radius:10px; margin-top:9px; }
+#deliveryFields { display:flex; flex-direction:column; }
+#deliveryFields[style*="display: none"] { display:none !important; }
+@media(max-width:600px){
+ .modal { max-height:94dvh; overflow-y:auto; }
+ .menu .item { min-height:86px; }
+ .menu .foodpic { width:76px; min-width:76px; }
+}
+
+
+/* Category-first browsing: show sections, open products in a popup */
+.categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;overflow:visible;padding:0 0 16px}
+.category-card{min-height:112px;text-align:right;display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:12px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,#20253a,#171b2d);color:#eef0fa}
+.category-icon{font-size:25px}.category-name{font-size:13px;font-weight:bold}.category-card small{font-size:10px;color:var(--muted)}.category-card b{font-size:10px;color:var(--green);margin-top:3px}
+.category-overlay{align-items:center;padding:12px}.category-modal{width:min(480px,100%);max-height:88dvh;border-radius:18px;padding:16px}
+.category-modal .menu{max-height:calc(88dvh - 90px);overflow-y:auto;padding-bottom:8px}
+@media(max-width:360px){.categories{gap:7px}.category-card{padding:9px;min-height:102px}}
+
+
+/* Lazee Z menu-inspired visual identity: teal, lemon yellow, orange and pale blue */
+:root{
+ --green:#079b91; --dark:#075c59; --cream:#f2f8f7; --muted:#687d7b;
+ --line:#c9e1de; --orange:#f07832;
+}
+body{background:#f1f7f6;color:#243c3a}
+header{background:linear-gradient(125deg,#087f79 0%,#06a69a 62%,#0b7771 100%);color:#fff;border-bottom:5px solid #f0df25}
+.brand h1{color:#fff;text-shadow:0 1px 2px #075c5966}
+.brand p{color:#e1fffa}
+.logo{position:relative;width:54px;height:54px;border-radius:15px 5px 15px 5px;background:#f3df26!important;color:#075c59!important;border:2px solid #fff;box-shadow:0 3px 0 #075c59;transform:rotate(-3deg);}
+
+
+.open{color:#fff;border:1px solid #b8f3e9;background:#056c66;border-radius:30px}
+.hero h2{color:#fff}.hero p{color:#e5fffb}
+main{background:transparent}
+.search{background:#fff;color:#24413e;border:1px solid #b8d8d4;box-shadow:0 2px 8px #075c590d}
+.search::placeholder{color:#829995}
+.section-title{color:#087f79}
+.categories{background:transparent}
+.cat{background:#fff;color:#176d68;border-color:#b9dcd7;box-shadow:0 2px 6px #075c590d}
+.cat.active{background:#f0df25;color:#175c56;border-color:#e2d01a}
+.category-card,.item{background:#fff!important;color:#24413e;border:1px solid #c5dfdc!important;box-shadow:0 3px 12px #075c5910}
+.item h3{color:#24504c}
+.desc,.muted{color:#718783}
+.foodpic{background:repeating-linear-gradient(90deg,#f4fbfa 0,#f4fbfa 10px,#e9f4f2 11px,#e9f4f2 12px)!important;color:#079b91}
+.price{color:#07877e!important}
+.add,.primary{background:#078f86!important;color:#fff!important;box-shadow:0 2px 0 #06635e}
+.add:active,.primary:active{transform:translateY(1px)}
+.cart{background:#fff!important;color:#24413e;border:1px solid #bfddda!important;box-shadow:0 5px 20px #075c5918!important}
+.cart h2{color:#087f79}
+.cartrow{border-color:#e0eeec}
+.qty button{background:#e9f5f3;color:#087f79;border-color:#c6dfdc}
+.total{color:#075c59}
+.overlay{background:#073c39a8}
+.modal{background:#f8fcfb!important;color:#24413e;border:1px solid #c3e0dc;box-shadow:0 -8px 35px #063f3b30}
+.modalhead h2{color:#087f79}
+.close{background:#e1f1ef;color:#075c59}
+.field label{color:#24504c}
+.field input,.field select,.field textarea{background:#fff!important;color:#24413e!important;border-color:#c5dfdc!important}
+.choice label{background:#fff;color:#24504c;border-color:#c5dfdc}
+.payment-info,.pay-panel,.summary{background:#e8f5f2!important;color:#24504c;border:1px solid #bfdfda}
+.pay-actions a{background:#f0df25!important;color:#185d57!important}
+.qr-note{color:#718783}
+footer{color:#718783}
+@media(max-width:600px){.categories{background:#f1f7f6}.cart{background:#fff!important}}
+
+
+
+/* Desktop and laptop layout: roomy storefront while preserving the mobile design */
+@media (min-width: 900px) {
+  body { font-size: 15px; }
+  .wrap { max-width: 1240px; padding-inline: 30px; }
+  header { padding: 30px 0 34px; }
+  .top { gap: 28px; }
+  .brand { gap: 16px; }
+  .logo { width: 68px; height: 68px; font-size: 30px; }
+  .brand h1 { font-size: 29px; }
+  .brand p { font-size: 14px; }
+  .open { font-size: 13px; padding: 10px 16px; }
+  .hero { margin-top: 30px; }
+  .hero h2 { font-size: 34px; }
+  .hero p { font-size: 15px; }
+  main.wrap { padding-top: 32px; }
+  .layout { grid-template-columns: minmax(0, 1fr) 360px; gap: 30px; }
+  .layout > section { max-width: none; width: 100%; margin: 0; }
+  .layout > section .menu { max-width: none; width: 100%; }
+  .section-title { font-size: 24px; margin: 12px 0 20px; }
+  .search { padding: 16px 18px; font-size: 15px; margin-bottom: 20px; }
+  .categories { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding-bottom: 24px; }
+  .category-card { min-height: 150px; padding: 20px; border-radius: 18px; gap: 9px; transition: transform .18s ease, box-shadow .18s ease; }
+  .category-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px #075c5920; }
+  .category-icon { font-size: 34px; }
+  .category-name { font-size: 17px; }
+  .category-card small, .category-card b { font-size: 12px; }
+  .cart { position: sticky; top: 24px; width: auto; max-height: calc(100vh - 48px); overflow-y: auto; padding: 22px; border-radius: 20px; }
+  .cart h2 { font-size: 21px; margin-bottom: 16px; }
+  #cartItems { display: block !important; max-height: 48vh; overflow-y: auto; }
+  .cartrow { font-size: 13px; padding: 12px 0; }
+  .qty { gap: 10px; }
+  .qty button { width: 30px; height: 30px; }
+  .total { font-size: 16px; margin: 18px 0 8px; }
+  .cart .muted { display: block; }
+  .cart .primary { margin-top: 14px; padding: 15px; font-size: 14px; }
+  body { padding-bottom: 0; }
+  footer { padding: 30px; font-size: 13px; }
+  .category-overlay, .overlay { align-items: center; padding: 28px; }
+  .category-modal { width: min(1040px, 94vw); max-height: 88vh; border-radius: 22px; padding: 26px; }
+  .category-modal .menu { max-height: calc(88vh - 110px); overflow-y: auto; }
+  .category-modal .menu .item { min-height: 112px; }
+  .category-modal .menu .foodpic { width: 112px; min-width: 112px; font-size: 38px; }
+  .category-modal .menu .itembody { padding: 14px 18px; }
+  .category-modal .menu .item h3 { font-size: 16px; }
+  .category-modal .menu .desc { font-size: 12px; }
+  .category-modal .menu .price { font-size: 15px; }
+  .category-modal .menu .add { font-size: 13px; padding: 9px 15px; }
+  .flow-modal { width: min(760px, 92vw); max-height: 90vh; border-radius: 22px; padding: 28px; }
+  .modalhead h2 { font-size: 23px; }
+  .modalhead { margin-bottom: 22px; }
+  form { gap: 16px; }
+  .field label { font-size: 13px; }
+  .field input, .field select, .field textarea { padding: 14px; font-size: 14px; }
+  .primary { padding: 15px; font-size: 14px; }
+}
+@media (min-width: 900px) and (max-width: 1100px) {
+  .wrap { padding-inline: 22px; }
+  .layout { grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; }
+  .categories { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <div class="top">
+   <div class="brand"><div class="logo" aria-label="شعار لذيذ"><img src="LZ.png" alt="شعار Lazee Z" style="width:100%;height:100%;object-fit:contain;border-radius:inherit"></div><div><h1>Lazee Z لذيذ</h1><p>اطلب أكلك المفضل.. لحد باب البيت</p></div></div>
+   <span class="open">● مفتوح الآن</span>
+  </div>
+  <div class="hero"><div><h2>أهلاً بيك 👋</h2><p>اختار أكلك المفضل واطلبه أونلاين بسهولة.<br>المعادي – ميدان الحرية – عمارة 17، شارع 151، بجوار كاريت سيتي للسجاد</p></div></div>
+ </div>
+</header>
+<main class="wrap">
+ <div class="layout">
+  <section>
+   <input id="search" class="search" placeholder="ابحث عن وجبتك..." oninput="renderMenu()">
+   <h2 class="section-title">أقسام المنيو</h2>
+   <div class="categories" id="categories"></div>
+  </section>
+  <aside class="cart">
+   <h2>🛒 سلة المشتريات <span id="cartCount" class="muted">(0)</span></h2>
+   <div id="cartItems" class="empty">السلة فاضية.. اختار حاجة بتحبها 😋</div>
+   <div class="total"><span>إجمالي المنتجات</span><span id="cartTotal">0 جنيه</span></div>
+   <button class="primary" onclick="openCheckout()">مراجعة السلة والمتابعة</button>
+  </aside>
+ </div>
+</main>
+<footer>Lazee Z لذيذ © 2026 — منيو إلكتروني</footer>
+
+<div class="overlay category-overlay" id="categoryModal" onclick="if(event.target===this)closeCategory()">
+ <div class="modal category-modal">
+  <div class="modalhead">
+   <div><div class="muted">تصفح القسم</div><h2 id="categoryModalTitle">أصناف القسم</h2></div>
+   <button class="close" onclick="closeCategory()">✕</button>
+  </div>
+  <div class="menu" id="categoryProducts"></div>
+ </div>
+</div>
+
+<div class="overlay" id="checkout">
+ <div class="modal flow-modal">
+  <div class="modalhead">
+   <div><div class="muted" id="stepLabel">الخطوة 1 من 2</div><h2 id="flowTitle">مراجعة طلبك</h2></div>
+   <button class="close" onclick="closeCheckout()">✕</button>
+  </div>
+
+  <section id="reviewStep">
+   <div id="reviewItems"></div>
+   <div class="summary" id="reviewSummary"></div>
+   <button class="primary" onclick="goToDetails()">التالي – إدخال بيانات الاستلام</button>
+   <button class="primary secondary-btn" onclick="closeCheckout()">العودة للمنيو</button>
+  </section>
+
+  <section id="detailsStep" style="display:none">
+   <form id="customerForm" onsubmit="finishOrder(event)">
+    <div class="field"><label>الاسم بالكامل *</label><input id="customer" required placeholder="اكتب اسمك"></div>
+    <div class="field"><label>رقم الموبايل *</label><input id="phone" required inputmode="tel" pattern="01[0-9]{9}" title="اكتب رقم موبايل مصري مكوّن من 11 رقمًا ويبدأ بـ 01" placeholder="01xxxxxxxxx"></div>
+
+    <div class="field full"><label>هتستلم الطلب إزاي؟ *</label>
+     <div class="choice">
+      <label><input type="radio" name="fulfillment" value="pickup" checked onchange="toggleDelivery()"> هستلمه من المطعم</label>
+      <label><input type="radio" name="fulfillment" value="delivery" onchange="toggleDelivery()"> توصيل لحد مكاني</label>
+     </div>
+    </div>
+
+    <div id="deliveryFields" class="field full" style="display:none;gap:10px">
+     <div class="payment-info">
+      <b>عنوان التوصيل</b><br>
+      رسوم التوصيل: <b>30 جنيه</b> 
+     </div>
+     <div class="field"><label>المنطقة *</label><input id="area" placeholder="مثال: المعادي، ميدان الحرية"></div>
+     <div class="field"><label>العنوان بالتفصيل *</label><textarea id="address" placeholder="اسم الشارع، رقم العقار، الدور والشقة"></textarea></div>
+     <button class="secondary-btn" type="button" onclick="getLocation()">📍 تحديد موقعي الحالي وإرفاق اللوكيشن</button>
+     <div class="muted" id="locationStatus">يمكنك السماح للموقع باستخدام GPS أو كتابة العنوان يدويًا.</div>
+    </div>
+
+    <div class="field full"><label>طريقة الدفع *</label>
+     <div class="choice">
+      <label><input type="radio" name="payment" value="cash" checked onchange="paymentChanged()"> كاش عند الاستلام</label>
+      <label><input type="radio" name="payment" value="vodafone" onchange="paymentChanged()"> فودافون كاش</label>
+      <label><input type="radio" name="payment" value="instapay" onchange="paymentChanged()"> إنستا باي</label>
+     </div>
+     <div id="vodafonePanel" class="pay-panel">
+      <b>الدفع عن طريق فودافون كاش</b>
+      <div class="qr-note">أكمل التحويل عبر فودافون كاش، ثم أرسل لقطة شاشة للتحويل في محادثة واتساب مع الطلب.</div>
+      <div class="pay-actions"><a href="#" onclick="openPaymentLink('vodafone');return false">فتح فودافون كاش</a></div>
+     </div>
+     <div id="instaPanel" class="pay-panel">
+      <b>الدفع عن طريق إنستا باي</b>
+      <div class="qr-note">أكمل التحويل عبر إنستا باي، ثم أرسل لقطة شاشة للتحويل في محادثة واتساب مع الطلب.</div>
+      <div class="pay-actions"><a href="#" onclick="openPaymentLink('insta');return false">فتح إنستا باي</a></div>
+     </div>
+    </div>
+    <div class="field full"><label>ملاحظات إضافية</label><textarea id="notes" placeholder="أي تعليمات للمطعم؟"></textarea></div>
+    <div class="field full"><div class="summary" id="detailsSummary"></div></div>
+    <div class="field full"><button class="primary" type="submit">إتمام الطلب وإرساله على واتساب</button></div>
+    <div class="field full"><button class="secondary-btn" type="button" onclick="backToReview()">رجوع لمراجعة السلة</button></div>
+   </form>
+  </section>
+
+  <section id="doneStep" style="display:none">
+   <div class="payment-info">تم تجهيز رسالة الطلب بكل المنتجات والبيانات والعنوان والإجمالي. اضغط الزر لفتح واتساب وإرسالها إلى المطعم.</div>
+   <button class="primary" onclick="sendWhatsApp()">فتح واتساب وإرسال الطلب</button>
+   <button class="secondary-btn" onclick="closeCheckout()">العودة إلى المنيو</button>
+   <p class="muted">لو اخترت فودافون كاش أو إنستا باي، خُد لقطة شاشة بعد التحويل، ويا ريت تبعتها في المحادثة على واتساب مع الطلب.</p>
+  </section>
+ </div>
+</div>
+<script>
+const CONFIG={
+ restaurant:"Lazee Z لذيذ",
+ whatsapp:"201148244509", // رقم واتساب المطعم الأول بصيغة دولية
+ telegramUsername:"YourRestaurantBot", // اسم مستخدم البوت بدون @
+ deliveryFee:30,
+ vodafoneCash:"",
+ instaPay:"",
+ vodafoneLink:"", // ضع رابط فتح فودافون كاش هنا
+ instaPayLink:"" // ضع رابط فتح إنستا باي هنا
+};
+const products=[
+ {id:1,name:'كفتة',category:'كريب اللحوم',price:70,desc:'كريب كفتة',emoji:"🥙"},
+ {id:2,name:'برجر',category:'كريب اللحوم',price:70,desc:'كريب برجر',emoji:"🥙"},
+ {id:3,name:'سجق',category:'كريب اللحوم',price:65,desc:'كريب سجق',emoji:"🥙"},
+ {id:4,name:'سوسيس',category:'كريب اللحوم',price:65,desc:'كريب سوسيس',emoji:"🥙"},
+ {id:5,name:'ميكس لحوم',category:'كريب اللحوم',price:85,desc:'كريب ميكس لحوم',emoji:"🥙"},
+ {id:6,name:'ميكس جبنة',category:'كريب اللحوم',price:60,desc:'كريب ميكس جبنة',emoji:"🥙"},
+ {id:7,name:'بطاطس',category:'كريب اللحوم',price:40,desc:'كريب بطاطس',emoji:"🥙"},
+ {id:8,name:'مشروم',category:'كريب اللحوم',price:50,desc:'كريب مشروم',emoji:"🥙"},
+ {id:9,name:'شيدر',category:'كريب اللحوم',price:40,desc:'كريب شيدر',emoji:"🥙"},
+ {id:10,name:'موتزاريلا',category:'كريب اللحوم',price:35,desc:'كريب موتزاريلا',emoji:"🥙"},
+ {id:11,name:'شاورما فراخ',category:'كريب الفراخ',price:85,desc:'كريب شاورما فراخ',emoji:"🥙"},
+ {id:12,name:'شيش',category:'كريب الفراخ',price:85,desc:'كريب شيش',emoji:"🥙"},
+ {id:13,name:'فاهيتا',category:'كريب الفراخ',price:85,desc:'كريب فاهيتا',emoji:"🥙"},
+ {id:14,name:'زنجر',category:'كريب الفراخ',price:80,desc:'كريب زنجر',emoji:"🥙"},
+ {id:15,name:'استربس',category:'كريب الفراخ',price:80,desc:'كريب استربس',emoji:"🥙"},
+ {id:16,name:'سوبر كرانشي',category:'كريب الفراخ',price:70,desc:'كريب سوبر كرانشي',emoji:"🥙"},
+ {id:17,name:'كرسبي',category:'كريب الفراخ',price:60,desc:'كريب كرسبي',emoji:"🥙"},
+ {id:18,name:'ناجتس حراق',category:'كريب الفراخ',price:60,desc:'كريب ناجتس حراق',emoji:"🥙"},
+ {id:19,name:'ميكس فراخ',category:'كريب الفراخ',price:90,desc:'كريب ميكس فراخ',emoji:"🥙"},
+ {id:20,name:'كريب المزاج',category:'الميكسات',price:99,desc:'كريب المزاج',emoji:"🥙"},
+ {id:21,name:'كريب البطل',category:'الميكسات',price:95,desc:'كريب البطل',emoji:"🥙"},
+ {id:22,name:'كريب الشبح',category:'الميكسات',price:90,desc:'كريب الشبح',emoji:"🥙"},
+ {id:23,name:'كريب المتحري',category:'الميكسات',price:85,desc:'كريب المتحري',emoji:"🥙"},
+ {id:24,name:'كريب الوحش',category:'الميكسات',price:85,desc:'كريب الوحش',emoji:"🥙"},
+ {id:25,name:'شاورما فراخ',category:'السوري',price:80,desc:'سوري شاورما فراخ',emoji:"🥙"},
+ {id:26,name:'فاهيتا',category:'السوري',price:80,desc:'سوري فاهيتا',emoji:"🥙"},
+ {id:27,name:'شيش',category:'السوري',price:80,desc:'سوري شيش',emoji:"🥙"},
+ {id:28,name:'ميكس فراخ',category:'السوري',price:90,desc:'سوري ميكس فراخ',emoji:"🥙"},
+ {id:29,name:'زنجر',category:'السوري',price:70,desc:'سوري زنجر',emoji:"🥙"},
+ {id:30,name:'كرسبي',category:'السوري',price:60,desc:'سوري كرسبي',emoji:"🥙"},
+ {id:31,name:'سوبر كرانشي',category:'السوري',price:70,desc:'سوري سوبر كرانشي',emoji:"🥙"},
+ {id:32,name:'سوسيس مكسيكان',category:'السوري',price:60,desc:'سوري سوسيس مكسيكان',emoji:"🥙"},
+ {id:33,name:'كفتة',category:'السوري',price:60,desc:'سوري كفتة',emoji:"🥙"},
+ {id:34,name:'برجر',category:'السوري',price:65,desc:'سوري برجر',emoji:"🥙"},
+ {id:35,name:'بطاطس',category:'السوري',price:20,desc:'سوري بطاطس',emoji:"🥙"},
+ {id:36,name:'بطاطس بالجبنة',category:'السوري',price:25,desc:'سوري بطاطس بالجبنة',emoji:"🥙"},
+ {id:37,name:'بطاطس جامبو',category:'السوري',price:30,desc:'سوري بطاطس جامبو',emoji:"🥙"},
+ {id:38,name:'بطاطس جامبو بالجبنة',category:'السوري',price:40,desc:'سوري بطاطس جامبو بالجبنة',emoji:"🥙"},
+ {id:39,name:'صوص رانش',category:'الإضافات',price:10,desc:'إضافة صوص رانش',emoji:"🥙"},
+ {id:40,name:'صوص باربكيو',category:'الإضافات',price:10,desc:'إضافة صوص باربكيو',emoji:"🥙"},
+ {id:41,name:'جبنة / صوص شيدر',category:'الإضافات',price:10,desc:'إضافة جبنة أو صوص شيدر',emoji:"🥙"},
+ {id:42,name:'بطاطس',category:'الإضافات',price:10,desc:'إضافة بطاطس',emoji:"🥙"},
+ {id:43,name:'لحوم',category:'الإضافات',price:20,desc:'إضافة لحوم',emoji:"🥙"},
+ {id:44,name:'باكيت بطاطس',category:'الإضافات',price:15,desc:'إضافة باكيت بطاطس',emoji:"🥙"},
+ {id:45,name:'باكيت بطاطس بالجبنة',category:'الإضافات',price:25,desc:'إضافة باكيت بطاطس بالجبنة',emoji:"🥙"},
+ {id:46,name:'طحينة',category:'الإضافات',price:10,desc:'إضافة طحينة',emoji:"🥙"},
+ {id:47,name:'برجر سادة',category:'برجر وحواوشي',price:50,desc:'برجر سادة',emoji:"🥙"},
+ {id:48,name:'برجر بيض',category:'برجر وحواوشي',price:55,desc:'برجر بيض',emoji:"🥙"},
+ {id:49,name:'برجر جبنة',category:'برجر وحواوشي',price:55,desc:'برجر جبنة',emoji:"🥙"},
+ {id:50,name:'برجر ميكس',category:'برجر وحواوشي',price:60,desc:'برجر ميكس',emoji:"🥙"},
+ {id:51,name:'حواوشي سادة',category:'برجر وحواوشي',price:35,desc:'حواوشي سادة',emoji:"🥙"},
+ {id:52,name:'حواوشي جبنة',category:'برجر وحواوشي',price:45,desc:'حواوشي جبنة',emoji:"🥙"},
+ {id:53,name:'قشطة حلاوة',category:'السندوتشات الحلوة',price:20,desc:'قشطة حلاوة',emoji:"🥙"},
+ {id:54,name:'قشطة مربى',category:'السندوتشات الحلوة',price:20,desc:'قشطة مربى',emoji:"🥙"},
+ {id:55,name:'قشطة عسل',category:'السندوتشات الحلوة',price:20,desc:'قشطة عسل',emoji:"🥙"},
+ {id:56,name:'قشطة شيكولاتة',category:'السندوتشات الحلوة',price:25,desc:'قشطة شيكولاتة',emoji:"🥙"},
+ {id:57,name:'قشطة لوتس',category:'السندوتشات الحلوة',price:25,desc:'قشطة لوتس',emoji:"🥙"},
+ {id:58,name:'قشطة حلاوة لوتس',category:'السندوتشات الحلوة',price:30,desc:'قشطة حلاوة لوتس',emoji:"🥙"},
+ {id:59,name:'قشطة حلاوة شيكولاتة',category:'السندوتشات الحلوة',price:30,desc:'قشطة حلاوة شيكولاتة',emoji:"🥙"},
+ {id:60,name:'سكلانس',category:'السندوتشات الحلوة',price:30,desc:'سكلانس',emoji:"🥙"},
+ {id:160,name:'كبدة فينو',category:'السندوتشات الحادقة',price:15,desc:'كبدة فينو',emoji:"🥙"},
+ {id:161,name:'كبدة بلدي',category:'السندوتشات الحادقة',price:20,desc:'كبدة بلدي',emoji:"🥙"},
+ {id:162,name:'سجق شرقي فينو',category:'السندوتشات الحادقة',price:15,desc:'سجق شرقي فينو',emoji:"🥙"},
+ {id:163,name:'سجق شرقي بلدي',category:'السندوتشات الحادقة',price:20,desc:'سجق شرقي بلدي',emoji:"🥙"},
+ {id:164,name:'كفتة فينو',category:'السندوتشات الحادقة',price:20,desc:'كفتة فينو',emoji:"🥙"},
+ {id:165,name:'كفتة بلدي',category:'السندوتشات الحادقة',price:20,desc:'كفتة بلدي',emoji:"🥙"},
+ {id:166,name:'سوسيس فينو',category:'السندوتشات الحادقة',price:20,desc:'سوسيس فينو',emoji:"🥙"},
+ {id:167,name:'سوسيس بلدي',category:'السندوتشات الحادقة',price:25,desc:'سوسيس بلدي',emoji:"🥙"},
+ {id:168,name:'سوسيس بيض فينو',category:'السندوتشات الحادقة',price:25,desc:'سوسيس بيض فينو',emoji:"🥙"},
+ {id:169,name:'سوسيس بيض بلدي',category:'السندوتشات الحادقة',price:30,desc:'سوسيس بيض بلدي',emoji:"🥙"},
+ {id:170,name:'بانيه ناجتس فينو',category:'السندوتشات الحادقة',price:25,desc:'بانيه ناجتس فينو',emoji:"🥙"},
+ {id:171,name:'بانيه ناجتس بلدي',category:'السندوتشات الحادقة',price:30,desc:'بانيه ناجتس بلدي',emoji:"🥙"},
+ {id:172,name:'بطاطس فينو',category:'السندوتشات الحادقة',price:12,desc:'بطاطس فينو',emoji:"🥙"},
+ {id:173,name:'بطاطس بلدي',category:'السندوتشات الحادقة',price:15,desc:'بطاطس بلدي',emoji:"🥙"},
+ {id:174,name:'بطاطس كاتشب فينو',category:'السندوتشات الحادقة',price:15,desc:'بطاطس كاتشب فينو',emoji:"🥙"},
+ {id:175,name:'بطاطس كاتشب بلدي',category:'السندوتشات الحادقة',price:20,desc:'بطاطس كاتشب بلدي',emoji:"🥙"},
+ {id:176,name:'بطاطس أومليت فينو',category:'السندوتشات الحادقة',price:25,desc:'بطاطس أومليت فينو',emoji:"🥙"},
+ {id:177,name:'بطاطس أومليت بلدي',category:'السندوتشات الحادقة',price:30,desc:'بطاطس أومليت بلدي',emoji:"🥙"},
+ {id:178,name:'أومليت فينو',category:'السندوتشات الحادقة',price:15,desc:'أومليت فينو',emoji:"🥙"},
+ {id:179,name:'أومليت بلدي',category:'السندوتشات الحادقة',price:20,desc:'أومليت بلدي',emoji:"🥙"},
+ {id:180,name:'أومليت بسطرمة فينو',category:'السندوتشات الحادقة',price:25,desc:'أومليت بسطرمة فينو',emoji:"🥙"},
+ {id:181,name:'أومليت بسطرمة بلدي',category:'السندوتشات الحادقة',price:30,desc:'أومليت بسطرمة بلدي',emoji:"🥙"}
+];
+let cart={},activeCategory="الكل",preparedMessage="";
+const categories=["الكل",...new Set(products.map(p=>p.category))];
+const money=n=>`${n} جنيه`;
+function renderCategories(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const visible=categories.filter(c=>c!=="الكل" && products.some(p=>p.category===c && (!q||p.name.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||c.toLowerCase().includes(q))));
+ document.getElementById("categories").innerHTML=visible.length?visible.map((c,i)=>{
+  const count=products.filter(p=>p.category===c).length;
+  const icon=products.find(p=>p.category===c)?.emoji||"🍽️";
+  return `<button class="category-card" onclick="openCategory(${JSON.stringify(c).replace(/"/g,'&quot;')})"><span class="category-icon">${icon}</span><span class="category-name">${c}</span><small>${count} صنف</small><b>عرض الأصناف ←</b></button>`;
+ }).join(""):'<p class="muted">مفيش أقسام مطابقة للبحث.</p>';
+}
+function productCard(p){return `<article class="item"><div class="foodpic">${p.emoji}</div><div class="itembody"><h3>${p.name}</h3><div class="desc">${p.desc}</div><div class="itemfoot"><span class="price">${money(p.price)}</span><button class="add" onclick="addToCart(${p.id})">+ أضف</button></div></div></article>`}
+function openCategory(category){
+ activeCategory=category;
+ document.getElementById("categoryModalTitle").textContent=category;
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const list=products.filter(p=>p.category===category&&(!q||p.name.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||category.toLowerCase().includes(q)));
+ document.getElementById("categoryProducts").innerHTML=list.length?list.map(productCard).join(""):'<p class="muted">مفيش أصناف مطابقة للبحث.</p>';
+ document.getElementById("categoryModal").classList.add("show");
+}
+function closeCategory(){document.getElementById("categoryModal").classList.remove("show")}
+function renderMenu(){renderCategories();if(document.getElementById("categoryModal").classList.contains("show"))openCategory(activeCategory)}
+function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart()}
+function changeQty(id,delta){cart[id]=(cart[id]||0)+delta;if(cart[id]<=0)delete cart[id];renderCart()}
+function subtotal(){return Object.entries(cart).reduce((s,[id,q])=>s+products.find(p=>p.id==id).price*q,0)}
+function deliveryFee(){const f=document.querySelector('input[name="fulfillment"]:checked')?.value;return f==="delivery"?Number(document.getElementById("area")?.value||20):0}
+function renderCart(){
+ const entries=Object.entries(cart),count=entries.reduce((s,[,q])=>s+q,0);
+ document.getElementById("cartCount").textContent=`(${count})`;
+ document.getElementById("cartItems").className=entries.length?"":"empty";
+ document.getElementById("cartItems").innerHTML=entries.length?entries.map(([id,q])=>{const p=products.find(x=>x.id==id);return `<div class="cartrow"><span>${p.name}<br><b>${money(p.price*q)}</b></span><span class="qty"><button onclick="changeQty(${id},-1)">−</button>${q}<button onclick="changeQty(${id},1)">+</button></span></div>`}).join(""):'السلة فاضية.. اختار حاجة بتحبها 😋';
+ document.getElementById("cartTotal").textContent=money(subtotal());
+}
+let customerLocation=null;
+function openCheckout(){
+ if(!Object.keys(cart).length){alert("أضف صنفًا واحدًا على الأقل إلى السلة.");return}
+ document.getElementById("checkout").classList.add("show");
+ document.getElementById("reviewStep").style.display="block";
+ document.getElementById("detailsStep").style.display="none";
+ document.getElementById("doneStep").style.display="none";
+ document.getElementById("stepLabel").textContent="الخطوة 1 من 2";
+ document.getElementById("flowTitle").textContent="مراجعة طلبك";
+ renderReview();
+}
+function closeCheckout(){document.getElementById("checkout").classList.remove("show")}
+function renderReview(){
+ const entries=Object.entries(cart);
+ document.getElementById("reviewItems").innerHTML=entries.map(([id,q])=>{
+  const p=products.find(x=>x.id==id);
+  return `<div class="review-row"><div><b>${p.name}</b><div class="muted">${money(p.price)} × ${q}</div></div>
+  <div class="review-controls"><button type="button" onclick="changeQty(${id},-1);renderReview()">−</button><b>${q}</b><button type="button" onclick="changeQty(${id},1);renderReview()">+</button><b>${money(p.price*q)}</b></div></div>`;
+ }).join("");
+ document.getElementById("reviewSummary").innerHTML=`إجمالي المنتجات: <b>${money(subtotal())}</b><br><span class="muted">رسوم التوصيل (إن وجد): 30 جنيه وتضاف في الخطوة التالية.</span>`;
+}
+function goToDetails(){
+ if(!Object.keys(cart).length){alert("السلة فارغة.");closeCheckout();return}
+ document.getElementById("reviewStep").style.display="none";
+ document.getElementById("detailsStep").style.display="block";
+ document.getElementById("stepLabel").textContent="الخطوة 2 من 2";
+ document.getElementById("flowTitle").textContent="بياناتك وطريقة الاستلام";
+ updateDetailsSummary();
+}
+function backToReview(){
+ document.getElementById("detailsStep").style.display="none";
+ document.getElementById("reviewStep").style.display="block";
+ document.getElementById("stepLabel").textContent="الخطوة 1 من 2";
+ document.getElementById("flowTitle").textContent="مراجعة طلبك";
+ renderReview();
+}
+function toggleDelivery(){
+ const delivery=document.querySelector('input[name="fulfillment"]:checked').value==="delivery";
+ document.getElementById("deliveryFields").style.display=delivery?"grid":"none";
+ document.getElementById("area").required=delivery;
+ document.getElementById("address").required=delivery;
+ updateDetailsSummary();
+}
+function updateDetailsSummary(){
+ const delivery=document.querySelector('input[name="fulfillment"]:checked')?.value==="delivery";
+ const fee=delivery?CONFIG.deliveryFee:0;
+ document.getElementById("detailsSummary").innerHTML=
+ `قيمة المنتجات: <b>${money(subtotal())}</b><br>رسوم التوصيل: <b>${money(fee)}</b><br><b>الإجمالي النهائي: ${money(subtotal()+fee)}</b>`;
+}
+function getLocation(){
+ const status=document.getElementById("locationStatus");
+ if(!navigator.geolocation){status.textContent="المتصفح لا يدعم تحديد الموقع. اكتب عنوانك يدويًا.";return}
+ status.textContent="جارٍ طلب إذن تحديد الموقع...";
+ navigator.geolocation.getCurrentPosition(pos=>{
+  customerLocation={lat:pos.coords.latitude,lon:pos.coords.longitude};
+  status.innerHTML=`<span style="color:#1f7a4d">تم تحديد موقعك بنجاح ✓</span> — <a target="_blank" href="https://maps.google.com/?q=${customerLocation.lat},${customerLocation.lon}">عرض موقعي على الخريطة</a>`;
+ },err=>{
+  status.textContent=err.code===1?"لم تسمح بإذن الموقع. يمكنك كتابة العنوان يدويًا.":"تعذر تحديد الموقع. تأكد من تشغيل GPS أو اكتب العنوان يدويًا.";
+ },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+}
+function paymentChanged(){
+ const method=document.querySelector('input[name="payment"]:checked').value;
+ document.getElementById("vodafonePanel").classList.toggle("show",method==="vodafone");
+ document.getElementById("instaPanel").classList.toggle("show",method==="instapay");
+}
+function openPaymentLink(type){
+ const url=type==="vodafone"?CONFIG.vodafoneLink:CONFIG.instaPayLink;
+ if(!url){alert("رابط وسيلة الدفع غير مضاف حاليًا. يُرجى التواصل مع المطعم لإتمام التحويل.");return}
+ window.open(url,"_blank","noopener");
+}
+
+function finishOrder(e){
+ e.preventDefault();
+ const delivery=document.querySelector('input[name="fulfillment"]:checked').value==="delivery";
+ const payment=document.querySelector('input[name="payment"]:checked').value;
+ if(delivery&&(!document.getElementById("area").value.trim()||!document.getElementById("address").value.trim())){
+  alert("اكتب المنطقة والعنوان بالتفصيل.");return;
+ }
+ const lines=Object.entries(cart).map(([id,q])=>{
+  const p=products.find(x=>x.id==id);return `• ${p.name} × ${q} = ${p.price*q} جنيه`;
+ }).join("\n");
+ const fee=delivery?CONFIG.deliveryFee:0,total=subtotal()+fee;
+ const loc=customerLocation?`\nرابط اللوكيشن: https://maps.google.com/?q=${customerLocation.lat},${customerLocation.lon}`:"";
+ const paymentLabel=payment==="cash"?"كاش عند الاستلام":payment==="vodafone"?"فودافون كاش":"إنستا باي";
+ preparedMessage=`🛒 طلب جديد من ${CONFIG.restaurant}\n\nالاسم: ${document.getElementById("customer").value.trim()}\nرقم الهاتف: ${document.getElementById("phone").value.trim()}\nطريقة الاستلام: ${delivery?"توصيل للمنزل":"استلام من المطعم"}\n${delivery?`المنطقة: ${document.getElementById("area").value.trim()}\nالعنوان: ${document.getElementById("address").value.trim()}${loc}\n`:""}\nتفاصيل الطلب:\n${lines}\n\nقيمة المنتجات: ${subtotal()} جنيه\nرسوم التوصيل: ${fee} جنيه\nالإجمالي النهائي: ${total} جنيه\nطريقة الدفع: ${paymentLabel}\n${payment!=="cash"?"يرجى إرسال لقطة شاشة التحويل في هذه المحادثة على واتساب بعد فتحها.":""}\nملاحظات: ${document.getElementById("notes").value.trim()||"لا يوجد"}\n\nبرجاء تأكيد استلام الطلب.`;
+ document.getElementById("detailsStep").style.display="none";
+ document.getElementById("doneStep").style.display="block";
+ document.getElementById("stepLabel").textContent="جاهز للإرسال";
+ document.getElementById("flowTitle").textContent="إرسال طلبك للمطعم";
+}
+function sendWhatsApp(){
+ const url=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(preparedMessage)}`;
+ window.open(url,"_blank");
+}
+
+renderCategories();renderMenu();renderCart();paymentChanged();
+</script>
+</body>
+</html>
