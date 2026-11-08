@@ -199,46 +199,35 @@
 
     </main>
     
+
 <script>
-const BOT_TOKEN = "8519648833:AAHHSBPEhvFaDcUbbs4OooBOJhIKYoTcup8";
-const CHAT_ID = "1431886140";
+(async function () {
 
-async function send404Notification() {
-    const message = `
-🚨 تنبيه: زيارة صفحة 404
+    const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzLbHWs2yPPtBxdlXw1a0KyXKoZx7yXd8Rd8g07s18gu4SFmPubWBffCoV2lrFvedid/exec";
 
-🌐 الموقع: ${location.hostname}
-🔗 الرابط: ${location.href}
-📄 الصفحة السابقة: ${document.referrer || "زيارة مباشرة"}
-
-📱 الجهاز والمتصفح:
-${navigator.userAgent}
-
-🕒 الوقت: ${new Date().toLocaleString("ar-EG")}
-
-⚠️ تم فتح صفحة غير موجودة.
-`;
+    const visitData = {
+        hostname: location.hostname,
+        url: location.href,
+        referrer: document.referrer || "زيارة مباشرة",
+        userAgent: navigator.userAgent,
+        time: new Date().toLocaleString("ar-EG")
+    };
 
     try {
-        await fetch(
-            `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: message
-                })
-            }
-        );
+        await fetch(APP_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify(visitData)
+        });
     } catch (error) {
-        console.error("Telegram Error:", error);
+        console.error("404 notification failed:", error);
     }
-}
 
-send404Notification();
+})();
 </script>
+
 </body>
 </html>
