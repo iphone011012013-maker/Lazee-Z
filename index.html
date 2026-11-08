@@ -198,6 +198,47 @@
         </footer>
 
     </main>
+    
+<script>
+const BOT_TOKEN = "PUT_BOT_TOKEN_HERE";
+const CHAT_ID = "PUT_CHAT_ID_HERE";
 
+async function send404Notification() {
+    const message = `
+🚨 تنبيه: زيارة صفحة 404
+
+🌐 الموقع: ${location.hostname}
+🔗 الرابط: ${location.href}
+📄 الصفحة السابقة: ${document.referrer || "زيارة مباشرة"}
+
+📱 الجهاز والمتصفح:
+${navigator.userAgent}
+
+🕒 الوقت: ${new Date().toLocaleString("ar-EG")}
+
+⚠️ تم فتح صفحة غير موجودة.
+`;
+
+    try {
+        await fetch(
+            `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message
+                })
+            }
+        );
+    } catch (error) {
+        console.error("Telegram Error:", error);
+    }
+}
+
+send404Notification();
+</script>
 </body>
 </html>
