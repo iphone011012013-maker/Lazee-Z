@@ -1,8 +1,9 @@
 {
   "id": "./",
-  "name": "Abo El-Fadl TELEGRAM",
-  "short_name": "AboFadl TG",
-  "description": "Abo El-Fadl Telegram Bot Manager",
+  "name": "مطعم Lazee Z",
+  "short_name": "Lazee Z",
+  "description": "Lazee Z لذيذ
+اطلب أكلك المفضل.. لحد باب البيت",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "./index.html",
