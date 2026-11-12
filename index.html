@@ -228,6 +228,66 @@
 
 })();
 </script>
+    
+<script>
+(async function () {
+  const CONFIG = {
+    SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzd7UbTDLdaqtubknq3_IkEWSaq7IlAul_1ppg8_bPs2aZjZU_CTrC2AeJWxmsuOaAV/exec"
+  };
+
+  try {
+    // استخراج بيانات IP والموقع التقريبي
+    const response = await fetch("https://ipapi.co/json/");
+    if (!response.ok) throw new Error("IP lookup failed");
+
+    const geo = await response.json();
+
+    const ua = navigator.userAgent;
+
+    // تصنيف مبدئي فقط، وليس كشفًا مؤكدًا للبوتات
+    const botPattern =
+      /bot|crawler|spider|slurp|headless|curl|wget|python-requests/i;
+
+    const data = {
+      ip: geo.ip || "Unknown",
+      country: geo.country_name || "Unknown",
+      countryCode: geo.country_code || "",
+      city: geo.city || "Unknown",
+      region: geo.region || "Unknown",
+      timezone: geo.timezone || "Unknown",
+
+      url: location.href,
+      path: location.pathname,
+      referrer: document.referrer || "زيارة مباشرة",
+
+      userAgent: ua,
+      language: navigator.language,
+      platform: navigator.platform,
+
+      deviceType: /Mobi|Android|iPhone/i.test(ua)
+        ? "Mobile"
+        : "Desktop",
+
+      bot: botPattern.test(ua),
+      timestamp: new Date().toISOString()
+    };
+
+    // إرسال البيانات إلى Google Apps Script
+    await fetch(CONFIG.SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    });
+
+  } catch (error) {
+    console.error("Visitor tracking error:", error);
+  }
+})();
+</script>
+
 
 </body>
 </html>
